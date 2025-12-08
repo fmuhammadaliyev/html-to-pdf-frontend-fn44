@@ -1,76 +1,73 @@
 import { useState } from "react";
+import styles from "../components/header/header.module.css";
 
-export default function Content({ styles, editMode }) {
-  // Bitta obyekt ichida turli nomdagi qiymatlar
-  const [personData, setPersonData] = useState({
-    full: "Mhammadaliyev Fahriddin",
-    home: "Uzbekistan, Fergana, Rishton, Toda, Navroz kochasi 112-uy",
-    born: "03,09,2007",
-    phoneNum: "+998 (99) 888-33-01",
+export default function Content({ editMode }) {
+  const [info, setInfo] = useState({
+    full: "Muhammadaliyev Fahriddin",
+    home: "Uzbekistan, Fergana, Rishton, Toda, Navroz ko'chasi 112-uy",
+    born: "03.09.2007",
+    phoneNum: "+998 (99) 883-33-01",
     mailAcc: "faxriddinmuhammadaliyev2007@gmail.com",
   });
 
-  // Har bir input o‘zgarganda ishlaydigan funksiya
   const changeField = (key, value) => {
-    setPersonData((old) => ({ ...old, [key]: value }));
+    setInfo((prev) => ({ ...prev, [key]: value }));
   };
 
-  // Faqat matn chiqaruvchi komponent
-  const ShowRow = ({ label, field }) => (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-        fontFamily: styles.defaultFont,
-      }}
-    >
-      {label}:{" "}
-      <p style={{ fontSize: "21px", whiteSpace: "pre-line" }}>
-        {personData[field]}
-      </p>
+  const Row = ({ title, field }) => (
+    <div className={styles.row}>
+      <b>{title}:</b>
+      <p>{info[field]}</p>
     </div>
   );
 
-  // Faqat input chiqaruvchi komponent
-  const EditRow = ({ field }) => (
+  const InputRow = ({ field }) => (
     <input
       type="text"
-      value={personData[field]}
+      className={styles.input}
+      value={info[field]}
       onChange={(e) => changeField(field, e.target.value)}
-      style={{ display: "block", marginBottom: "10px", width: "300px" }}
     />
   );
 
   return (
-    <div>
-      {/* Name */}
-      {editMode ? (
-        <EditRow field="full" />
-      ) : (
-        <h1 style={{ fontFamily: styles.defaultFont }}>{personData.full}</h1>
-      )}
+    <div className={styles.card}>
+      <h1 className={styles.title}>{info.full}</h1>
+      <hr className={styles.line} />
 
-      {editMode ? (
-        <EditRow field="home" />
-      ) : (
-        <ShowRow label="Address" field="home" />
-      )}
-      {editMode ? (
-        <EditRow field="born" />
-      ) : (
-        <ShowRow label="Birthday" field="born" />
-      )}
-      {editMode ? (
-        <EditRow field="phoneNum" />
-      ) : (
-        <ShowRow label="Phone" field="phoneNum" />
-      )}
-      {editMode ? (
-        <EditRow field="mailAcc" />
-      ) : (
-        <ShowRow label="Email" field="mailAcc" />
-      )}
+      <div className={styles.grid}>
+        <div>
+          {editMode ? (
+            <InputRow field="full" />
+          ) : (
+            <Row title="Name" field="full" />
+          )}
+          {editMode ? (
+            <InputRow field="home" />
+          ) : (
+            <Row title="Address" field="home" />
+          )}
+          {editMode ? (
+            <InputRow field="born" />
+          ) : (
+            <Row title="Birthday" field="born" />
+          )}
+          {editMode ? (
+            <InputRow field="phoneNum" />
+          ) : (
+            <Row title="Tel" field="phoneNum" />
+          )}
+          {editMode ? (
+            <InputRow field="mailAcc" />
+          ) : (
+            <Row title="Email" field="mailAcc" />
+          )}
+        </div>
+
+        <div className={styles.avatarBox}>
+          <div className={styles.avatar}></div>
+        </div>
+      </div>
     </div>
   );
 }

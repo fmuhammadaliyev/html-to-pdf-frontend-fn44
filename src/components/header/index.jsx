@@ -4,6 +4,7 @@ export default function Header({
   handleFont,
   editMode,
   setEditMode,
+  generate,
 }) {
   return (
     <header>
@@ -33,7 +34,7 @@ export default function Header({
         <label htmlFor="editMode">
           <span></span>
         </label>
-        <button>Generate</button>
+        <button onClick={generate}>Generate</button>
       </div>
     </header>
   );

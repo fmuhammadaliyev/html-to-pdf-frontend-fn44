@@ -20,7 +20,21 @@ export default function App() {
   }
 
   function generate() {
-    console.log(contentRef.current.innerHTML);
+    fetch("http://localhost:3000/url", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        html: contentRef.current.innerHTML,
+      }),
+    })
+      .then((res) => {
+        return res.blob();
+      })
+      .then((res) => {
+        console.log(res);
+      });
   }
 
   return (

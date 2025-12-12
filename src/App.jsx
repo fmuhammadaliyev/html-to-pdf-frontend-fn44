@@ -19,6 +19,15 @@ export default function App() {
     });
   }
 
+  function download(file) {
+    const url = URL.createObjectURL(file);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "resume.pdf";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   function generate() {
     fetch("http://localhost:3000/url", {
       method: "POST",
@@ -33,7 +42,7 @@ export default function App() {
         return res.blob();
       })
       .then((res) => {
-        console.log(res);
+        download(res);
       });
   }
 

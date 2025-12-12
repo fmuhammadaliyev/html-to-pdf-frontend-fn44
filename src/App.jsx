@@ -36,14 +36,15 @@ export default function App() {
       },
       body: JSON.stringify({
         html: contentRef.current.innerHTML,
+        css: `
+        * {
+          font-family: ${styles.defaultFont};
+        }
+      `,
       }),
     })
-      .then((res) => {
-        return res.blob();
-      })
-      .then((res) => {
-        download(res);
-      });
+      .then((res) => res.blob())
+      .then((file) => download(file));
   }
 
   return (

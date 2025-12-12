@@ -1,4 +1,7 @@
-export default function Content({ editMode, contentRef, styles }) {
+import { useState } from "react";
+import styles from "../components/header/header.module.css";
+
+export default function Content({ editMode, contentRef }) {
   const [info, setInfo] = useState({
     full: "Muhammadaliyev Fahriddin",
     home: "Uzbekistan, Fergana, Rishton, Toda, Navroz ko'chasi 112-uy",
@@ -33,12 +36,7 @@ export default function Content({ editMode, contentRef, styles }) {
       <hr className={styles.line} />
 
       <div className={styles.grid}>
-        <div
-          ref={contentRef}
-          style={{
-            fontFamily: styles.defaultFont, // ← FONT SHU YERDA ISHLAYDI
-          }}
-        >
+        <div ref={contentRef}>
           {editMode ? (
             <InputRow field="full" />
           ) : (
